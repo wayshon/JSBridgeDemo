@@ -1,0 +1,75 @@
+<!DOCTYPE HTML>
+<html>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+<title>my hybird</title>
+
+<head>
+    <style>
+        body {
+            height: 100%;
+            background-color: pink;
+        }
+    </style>
+</head>
+
+<body>
+    <div>
+        <input id="fornativetext" type="text" placeholder="输入文本传给native弹框">
+        <input id="shownative" type="button" value="弹出一个native弹框">
+    </div>
+    <div>
+        <label for="num1">数字1：</label>
+        <input id="num1" type="number" placeholder="数字1">
+    </div>
+    <div>
+        <label for="num2">数字2：</label>
+        <input id="num2" type="number" placeholder="数字2">
+    </div>
+    <input id="calladd" type="button" value="给native计算">
+    <h1 id="result"></h1>
+
+    <script>
+        var showJSAlert = function(param) {
+            try {
+                var result = JSON.parse(param)
+                alert(result.title + " : " + result.content);
+            }catch (e) {
+                alert('这里是 js 弹框 ： ' + param);
+            }
+        }
+
+        var fornativetext = document.getElementById("fornativetext"),
+            shownative = document.getElementById("shownative");
+
+        shownative.addEventListener("click", function(event) {
+            var param = {
+                title: "this is from JS",
+                content: fornativetext.value
+            }
+            NativeObj.showUIAlertView(param)
+        }, false)
+
+        var num1 = document.getElementById("num1"),
+            num2 = document.getElementById("num2"),
+            calladd = document.getElementById("calladd"),
+            result = document.getElementById("result");
+
+        calladd.addEventListener("click", function(event) {
+
+            var n1 = num1.value || 0,
+                n2 = num2.value || 0;
+
+            n1 = parseInt(n1);
+            n2 = parseInt(n2);
+
+            let sum = NativeObj.add(n1, n2);
+
+            result.innerText = "加法结果为：" + sum;
+        }, false)
+
+
+    </script>
+</body>
+
+</html>
